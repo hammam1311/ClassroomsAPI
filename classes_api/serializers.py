@@ -5,48 +5,21 @@ from django.contrib.auth.models import User
 class ClassroomListSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Classroom
-		fields = ['subject', 'grade']
+		fields = ['name', 'subject', 'year', 'teacher']
 
 
 class ClassroomDetailSerializer(serializers.ModelSerializer):
-	students = serializers.SerializerMethodField()
 	class Meta:
 		model = Classroom
-		fields = ['subject', 'grade', 'year', 'teacher', 'students']
-
-	def get_students(self, obj):
-		return StudentUpdateSerializer(obj.students.all(), many=True).data
+		fields = '__all__'
 
 
-class ClassroomCreateUpdateSerializer(serializers.ModelSerializer):
+class ClassroomCreateSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Classroom
-		fields = ['subject', 'grade', 'year']
+		fields = ['subject', 'name', 'year']
 
-
-class StudentCreateSerializer(serializers.ModelSerializer):
+class ClassroomUpdateSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Student
-		fields = "__all__"
-
-
-class StudentUpdateSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Student
-		exclude = ['classroom']
-
-
-class UserCreateSerializer(serializers.ModelSerializer):
-	password = serializers.CharField(write_only=True)
-	class Meta:
-		model = User
-		fields = ['username', 'password']
-
-	def create(self, validated_data):
-		username = validated_data['username']
-		password = validated_data['password']
-		new_user = User(username=username)
-		new_user.set_password(password)
-		new_user.save()
-		return validated_data
-
+		model = Classroom
+		fields = ['subject', 'name', 'year']
