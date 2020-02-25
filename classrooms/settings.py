@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'classes',
 
     'crispy_forms',
+    'apiclasses',
+    'rest_framework',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -56,6 +58,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'classrooms.urls'
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+
+}
 
 TEMPLATES = [
     {
